@@ -10,6 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IAdministradorServicos, AdministradorServicos>();
 
+// Adiciona Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(
+    options =>
+    {
+        options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+            Version = "v1",
+            Title = "Minimal API",
+            Description = "Uma API minimalista com ASP.NET Core",
+        });
+    }
+);
+
 builder.Services.AddDbContext<DbContexto>(options =>
 {
     options.UseMySql(
@@ -29,5 +43,13 @@ app.MapPost("/login", ([FromBody] LoginDTO loginDTO, IAdministradorServicos admi
     else
         return Results.Unauthorized();
 });
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minimal API v1");
+    c.RoutePrefix = string.Empty; // Acessa o Swagger UI na raiz
+});
+
 
 app.Run();
