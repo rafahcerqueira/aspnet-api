@@ -15,9 +15,11 @@ namespace minimal_api.Dominio.Servicos
 
         public VeiculoServicos(DbContexto contexto) => _contexto = contexto;
 
-        public void ApagarVeiculo(Veiculo veiculo)
+        public void ApagarVeiculo(string id)
         {
-            _contexto.Veiculos.Remove(veiculo);
+            var veiculo = _contexto.Veiculos.Find(id);
+            if (veiculo != null)
+                _contexto.Veiculos.Remove(veiculo);
             _contexto.SaveChanges();
         }
 
@@ -28,22 +30,26 @@ namespace minimal_api.Dominio.Servicos
         }
 
         public Veiculo? BuscaPorId(string id) => _contexto.Veiculos.Find(id);
-    
-        public void IncluirVeiculo(Veiculo veiculo) => _contexto.Veiculos.Add(veiculo);
 
-        public List<Veiculo> ListarVeiculos(int pagina = 1, string? nome = null, string? marca = null)
+        public void IncluirVeiculo(Veiculo veiculo)
+        {
+            _contexto.Veiculos.Add(veiculo);
+            _contexto.SaveChanges();
+        }
+
+        public List<Veiculo> ListarVeiculos(int? pagina = 1, string? nome = null, string? marca = null)
         {
             var query = _contexto.Veiculos.AsQueryable();
+            
             if (!string.IsNullOrEmpty(nome))
-            {
                 query = query.Where(v => EF.Functions.Like(v.Nome.ToLower(), $"%{nome}%"));
-            }
 
             int itensPorPagina = 10;
 
-            query = query.Skip((pagina - 1) * itensPorPagina).Take(itensPorPagina);
+            if (pagina != null)
+                query = query.Skip(((int)pagina - 1) * itensPorPagina).Take(itensPorPagina);
 
-            return query.ToList();            
+            return query.ToList();
         }
     }
 }

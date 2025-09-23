@@ -1,8 +1,8 @@
 version: "3.9"
 services:
   db:
-    image: mysql:8.0
-    container_name: meu-mysql
+    image: mysql:latest
+    container_name: minimal_api_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

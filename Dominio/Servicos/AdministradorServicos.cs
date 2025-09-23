@@ -16,6 +16,19 @@ namespace minimal_api.Dominio.Servicos
 
         public AdministradorServicos(DbContexto contexto) => _contexto = contexto;
 
+        public Administrador Incluir(Administrador administrador)
+        {
+            _contexto.Administradores.Add(administrador);
+            _contexto.SaveChanges();
+
+            return administrador;
+        }
+
+        public List<Administrador> ListarAdministradores(int pagina = 1)
+        {
+            return _contexto.Administradores.Skip((pagina - 1) * 10).Take(10).ToList();
+        }
+
         public Administrador? Login(LoginDTO loginDTO)
         {
             var adm = _contexto.Administradores.Where(a => a.Email == loginDTO.Email && a.Senha == loginDTO.Senha).FirstOrDefault();

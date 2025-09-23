@@ -8,10 +8,10 @@ namespace minimal_api.Dominio.Interfaces
 {
     public interface IVeiculoServico
     {
-        List<Veiculo> ListarVeiculos(int pagina = 1, string? nome = null, string? marca = null);
+        List<Veiculo> ListarVeiculos(int? pagina = 1, string? nome = null, string? marca = null);
         Veiculo? BuscaPorId(string id);
         void IncluirVeiculo(Veiculo veiculo);
         void AtualizarVeiculo(Veiculo veiculo);
-        void ApagarVeiculo(Veiculo veiculo);
+        void ApagarVeiculo(string id);
     }
 }
