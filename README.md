@@ -1,4 +1,5 @@
-# Minimal API ■
+# <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg" alt=".NET" width="30"/> Minimal API
+
 API simples desenvolvida com **ASP.NET**, utilizando **Entity Framework Core** com **MySQL** O projeto também inclui configuração para **Swagger**, suporte a **MSTest** para testes e autenticação com **JWT**
 
 ## 📂 Estrutura do Projeto
@@ -44,7 +45,7 @@ Isso irá:
 - Executar o script `script.sql` para inicializar a base
 ---
 
-## ■ Rodando a API
+## 🔷 Rodando a API
 Na raiz do projeto, execute:
 ```
 dotnet build
